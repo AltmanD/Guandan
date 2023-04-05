@@ -45,8 +45,8 @@ def klass(typename: str, field_names: List[str], *, init=None) -> type:
 
 
 Context = klass('Context', [
-    'n_entities',
-    'entity_types',
+    'entity_index',
+    'entity_name',
     'component_types',
     'entity_names',
     'entity_by_name',
@@ -63,3 +63,64 @@ Context = klass('Context', [
     {},
     {},
 ])
+
+
+def entity_add(ctx: Context, name: Optional[str] = None) -> int:
+    """Add an entity to the context.
+
+    Args:
+        ctx (Context): The context.
+        name (Optional[str], optional): The name of the entity. Defaults to None.
+
+    Returns:
+        int: The entity ID.
+
+    Raises:
+        ValueError: If the entity name already exists.
+    """
+    if name is not None and name in ctx.entity_by_name:
+        raise ValueError(f'Entity with name {name!r} already exists') from None
+    eid = ctx.n_entities
+    ctx.n_entities += 1
+    ctx.entity_names[eid] = name
+    if name is not None:
+        ctx.entity_by_name[name] = eid
+    ctx.entity_components[eid] = {}
+    ctx.entity_components_by_type[eid] = defaultdict(list)
+    return eid
+
+
+def entity_get_all(ctx) -> Iterator[int]:
+    """Get all entity IDs.
+
+    Args:
+        ctx (Context): The context.
+
+    Returns:
+        Iterator[int]: The entity IDs.
+    """
+    return ctx.entity_names.keys()
+
+
+def entity_remove(ctx: Context, eid: int) -> None:
+    """Remove an entity from the context.
+
+    Args:
+        ctx (Context): The context.
+        eid (int): The entity ID.
+
+    Raises:
+        ValueError: If the entity does not exist.
+    """
+    try:
+        name = ctx.entity_names.pop(eid)
+    except KeyError:
+        _exception_entity_not_exist(eid)
+    if name is not None:
+        del ctx.entity_by_name[name]
+    del ctx.entity_components[eid]
+    del ctx.entity_components_by_type[eid]
+
+
+def _exception_entity_not_exist(eid: int):
+    raise ValueError(f'Entity {eid} does not exist') from None
