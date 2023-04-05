@@ -1,4 +1,7 @@
+__author__ = 'Yu Yan'
+
 import itertools as it
+from copy import deepcopy
 
 def cards2action_list(cards, rank_card_num, rank_card, last_type=-1, last_value=0):
     action_list = []
@@ -16,7 +19,6 @@ def cards2action_list(cards, rank_card_num, rank_card, last_type=-1, last_value=
                 tmp[i+j*13] = 1
                 single[i].append(tmp)
 
-
     if cards[-2]:
         tmp = [0] * 54
         tmp[-2] = 1
@@ -30,7 +32,6 @@ def cards2action_list(cards, rank_card_num, rank_card, last_type=-1, last_value=
         single.append([tmp])
     else:
         single.append([])
-
 
     # 对子
     double = []
@@ -65,7 +66,6 @@ def cards2action_list(cards, rank_card_num, rank_card, last_type=-1, last_value=
         double.append([tmp])
     else:
         double.append([])
-
 
     #三张以上
     n_card = [single, double]
@@ -264,10 +264,5 @@ def cards2action_list(cards, rank_card_num, rank_card, last_type=-1, last_value=
     action_list += straight + triple_double + straight_double + plates + big_bumb
     action_list = list(set([tuple(t) for t in action_list]))
     action_list = [list(v) for v in action_list]
-
-    # ad = actions_decoding(action_list)
-
-    # for a in ad:
-    #     print(a)
 
     return action_list
