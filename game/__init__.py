@@ -122,5 +122,18 @@ def entity_remove(ctx: Context, eid: int) -> None:
     del ctx.entity_components_by_type[eid]
 
 
+def entity_get_with_name(ctx: Context, name: str) -> Optional[int]:
+    """Get an entity ID with a given name.
+
+    Args:
+        ctx (Context): The context.
+        name (str): The name of the entity.
+
+    Returns:
+        Optional[int]: The entity ID, or None if the entity is not found.
+    """
+    return ctx.entity_by_name.get(name)
+
+
 def _exception_entity_not_exist(eid: int):
     raise ValueError(f'Entity {eid} does not exist') from None
