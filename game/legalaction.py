@@ -3,7 +3,7 @@ __author__ = 'Yu Yan'
 import itertools as it
 from copy import deepcopy
 
-def cards2action_list(cards, rank_card_num, rank_card, last_type=-1, last_value=0):
+def legalaction(cards, rank_card_num, rank_card, last_type=-1, last_value=0):
     action_list = []
     if last_type != -1:
         action_list.append([])
