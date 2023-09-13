@@ -1,5 +1,6 @@
 __author__ = 'Lu Yudong'
 
+from comps import comp
 from collections import defaultdict
 from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, Union
 
@@ -133,6 +134,10 @@ def entity_get_with_name(ctx: Context, name: str) -> Optional[int]:
         Optional[int]: The entity ID, or None if the entity is not found.
     """
     return ctx.entity_by_name.get(name)
+
+
+def entity_add_comp(ctx: Context, name: str, comp: comp) -> Optional[int]:
+    pass
 
 
 def _exception_entity_not_exist(eid: int):

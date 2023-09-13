@@ -4,26 +4,27 @@ Author : Lu Yudong
 """
 __author__ = 'Lu Yudong'
 
-from game import Context, entity_add, entity_get_all, entity_remove, entity_get_with_name
+from game import Context, entity_add, entity_get_all, entity_remove, entity_get_with_name, entity_add_comp
+from comps import card_deck
 import numpy as np
 
 def init(ctx: Context):
-    init_world(ctx)
+    init_table(ctx)
     init_card(ctx)
 
-def init_world(ctx: Context):
-    entity_add(ctx, 'world')
-    entity_add(ctx, 'deck')
-    entity_add(ctx, 'history')
+
+def init_table(ctx: Context):
+    entity_add(ctx, 'card_history')
     for i in range(4):
-        entity_add(ctx, 'client{}'.format(i+1))
+        entity_add(ctx, 'palyer{}'.format(i+1))
     
-    return 0
 
 def init_card(ctx):
     seed = np.random.seed()
-    for i in range(4):
-        eid = entity_get_with_name(ctx, 'client{}'.format(i+1))
+    card_decks = card_deck(2)
+    cards = card_decks.deal4player(4)
+    for i, card in enumerate(cards):
+        entity_add_comp(ctx, 'player{}'.format(i+1), card)
     
 
 def step(action):
