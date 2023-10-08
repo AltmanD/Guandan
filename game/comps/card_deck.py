@@ -1,5 +1,4 @@
-from comps import comp
-class card_deck(comp):
+class card_deck:
     def __init__(self, number_of_decks) -> None:
         self.total_card_num = 54 * number_of_decks
 
