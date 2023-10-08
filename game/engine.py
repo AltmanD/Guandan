@@ -6,6 +6,7 @@ __author__ = 'Lu Yudong'
 
 from game import Context, entity_add, entity_get_all, entity_remove, entity_get_with_name, entity_add_comp
 from comps import card_deck
+from utils import ctx2info
 import numpy as np
 
 def init(ctx: Context):
@@ -27,13 +28,32 @@ def init_card(ctx):
         entity_add_comp(ctx, 'player{}'.format(i+1), card)
     
 
-def step(action):
+def step(ctx, action):
+    if action is None:
+        # default random action
+        action = 0
+    
     return 0
 
-def reset():
+
+def reset(ctx):
     return 0
+
 
 def close(ctx):    
     for eid in list(entity_get_all(ctx)):
         entity_remove(ctx, eid)
     return 0
+
+
+if __name__ == '__main__':
+    obs = []
+    ctx = Context()
+    init(ctx)
+    info = ctx2info(ctx)
+    obs.append(info)
+    while not info['done']:
+        step(ctx, None)
+        info = ctx2info(ctx)
+        obs.append(info)
+    reset(ctx)
