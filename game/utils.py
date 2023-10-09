@@ -278,3 +278,21 @@ def ctx2info(ctx: Context):
         'done': None
     }
     return info
+
+def card_dict2list(card_info: dict):
+    return []
+
+def card_dict2str(card_info: dict):
+    return ''
+
+def card_list2dict(card_info: list):
+    return {}
+
+def card_list2str(card_info: list):
+    return ''
+
+def card_str2dict(card_info: str):
+    return {}
+
+def card_str2list(card_info: str):
+    return []

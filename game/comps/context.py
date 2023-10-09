@@ -1,7 +1,10 @@
 class Context:
     def __init__(self) -> None:
         self.table = None
+        self.card_decks = None
         self.players = {}
+        self.players_id_list = []
+        self.card_history_by_player_id = {}
         self.steps = 0
         self.player_waiting = None
         self.last_action = None

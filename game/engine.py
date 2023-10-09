@@ -5,19 +5,24 @@ Author : Lu Yudong
 __author__ = 'Lu Yudong'
 
 import numpy as np
-from comps import Table, Player, Context
+from comps import Table, Player, Context, CardDeck
 from utils import ctx2info
 
 
 def init(ctx: Context):
     ctx.table = Table()
+    ctx.card_decks = CardDeck(2)
     for i in range(4):
         ctx.players[i] = Player(i)
-    deal(ctx)
+        ctx.players_id_list.append(i)
+    battle_init(ctx)
 
 
-def deal(ctx: Context):
-    pass
+def battle_init(ctx: Context):
+    ctx.table.join(ctx.players_id_list)
+    card_lists = ctx.card_decks.deal(4)
+    for i in range(4):
+        ctx.players[i].update_cards(card_lists[i])
 
 
 def step(ctx: Context, action: int):
