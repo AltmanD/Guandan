@@ -12,3 +12,7 @@ class Table:
     def join(self, player_id_list: list):
         self.players_on_table_numb += len(player_id_list)
         self.players_on_table_id = list(set(self.players_on_table_id + player_id_list))
+    
+    def detach(self, player_id: int):
+        self.players_on_table_numb -= 1
+        self.players_on_table_id.remove(player_id)

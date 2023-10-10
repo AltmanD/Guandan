@@ -1,6 +1,8 @@
 import itertools as it
 from copy import deepcopy
-from game.comps.context import Context
+
+from comps.context import Context
+
 
 def legalaction(cards, rank_card_num, rank_card, last_type=-1, last_value=0):
     '''
@@ -280,7 +282,11 @@ def ctx2info(ctx: Context):
     return info
 
 def card_dict2list(card_info: dict):
-    return []
+    res = []
+    for k, v in card_info.items():
+        res.extend([k] * v)
+    res.sort()
+    return res
 
 def card_dict2str(card_info: dict):
     return ''

@@ -1,4 +1,7 @@
+import random
+
 from utils import *
+
 color = ['S', 'H', 'C', 'D'] # 黑桃 ♠ spade, 红心 ♥ heart, 方片 ♦ dianmond, 梅花 ♣ club
 
 class CardDeck:
@@ -6,7 +9,7 @@ class CardDeck:
     def __init__(self, number_of_decks) -> None:
         self.total_card_num = 54 * number_of_decks
         self.cards_in_dict = {}
-        for c in range(len(color)):
+        for c in color:
             for index in range(13):
                 if index < 9:
                     self.cards_in_dict.update({'{}{}'.format(c, index+1): number_of_decks})
@@ -28,4 +31,13 @@ class CardDeck:
             .format(self.total_card_num, self.cards_in_dict)
         
     def deal(self, number_of_players: int):
-        return [[]]
+        cards_per_player = self.total_card_num // number_of_players
+        rand_card_list = sorted(self.cards_in_list, key=lambda x: random.random())
+        start_index = 0
+        end_index = cards_per_player
+        res = []
+        for _ in range(number_of_players):
+            res.append(rand_card_list[start_index:end_index])
+            start_index = end_index
+            end_index += cards_per_player
+        return res
