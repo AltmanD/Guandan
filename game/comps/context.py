@@ -8,6 +8,8 @@ class Context:
         self.steps = 0
         self.player_waiting = None
         self.last_action = None
+        self.rank = None
+        self.win_order_last_round = None
 
     def __repr__(self) -> str:
         return 'Context(table={}, players={}, steps={}, player_waiting={}, last_action={})' \

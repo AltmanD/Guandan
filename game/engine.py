@@ -11,7 +11,7 @@ from utils import ctx2info
 
 def init(ctx: Context):
     ctx.table = Table()
-    ctx.card_decks = CardDeck(2)
+    ctx.card_decks = CardDeck()
     for i in range(4):
         ctx.players[i] = Player(i)
         ctx.players_id_list.append(i)
@@ -20,9 +20,12 @@ def init(ctx: Context):
 
 def battle_init(ctx: Context):
     ctx.table.join(ctx.players_id_list)
-    deal_card_lists = ctx.card_decks.deal(4)
+    ctx.card_decks.update_deck(2)
+    deal_card_lists = ctx.card_decks.deal(len(ctx.players_id_list))
     for i in range(4):
         ctx.players[i].update_cards(deal_card_lists[i])
+    if ctx.win_order_last_round is None:
+        ctx.player_waiting = np.random.randint(0, 4)
 
 
 def step(ctx: Context, action: int):
