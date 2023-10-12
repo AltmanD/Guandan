@@ -6,12 +6,14 @@ __author__ = 'Lu Yudong'
 
 import numpy as np
 from comps import CardDeck, Context, Player, Table
-from utils import ctx2info
+from utils import ctx2info, legalaction
 
 
 def init(ctx: Context):
     ctx.table = Table()
     ctx.card_decks = CardDeck()
+    ctx.players = {}
+    ctx.players_id_list = []
     for i in range(4):
         ctx.players[i] = Player(i)
         ctx.players_id_list.append(i)
@@ -26,18 +28,30 @@ def battle_init(ctx: Context):
         ctx.players[i].update_cards(deal_card_lists[i])
     if ctx.win_order_last_round is None:
         ctx.player_waiting = np.random.randint(0, 4)
+    ctx.action_history_by_player_id = {
+            0: {},
+            1: {},
+            2: {},
+            3: {},
+        }
+    ctx.rank = '2'
+    ctx.steps = 0
 
 
 def step(ctx: Context, action: int):
+    legalactions = legalaction(ctx)
     if action is None:
         # default random action
-        action = 0
-    update(ctx)
+        action = np.random.randint(0, len(legalactions))
+    update(ctx, legalactions[action])
     return 0
 
 
-def update(ctx: Context):
-    pass
+def update(ctx: Context, action: str):
+    ctx.last_action = action
+    ctx.action_history_by_player_id[ctx.player_waiting][ctx.steps] = action
+    ctx.players[ctx.player_waiting].play(action)
+    ctx.player_waiting = (ctx.player_waiting + 1) % 4
 
 
 def reset(ctx):
