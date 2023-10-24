@@ -4,10 +4,14 @@ from copy import deepcopy
 from comps.context import Context
 
 
-def legalaction(cards, rank_card_num, rank_card, last_type=-1, last_value=0):
+def legalaction(ctx: Context, cards, rank_card_num, rank_card, last_type=-1, last_value=0):
     '''
-    author: Yu Yan
+    author: Yu Yan & Lu Yudong
     '''
+    cards = ctx.players[ctx.player_waiting].get_cards_vector()
+    rank_card_num = ctx.players[ctx.player_waiting].get_rank_card_num()
+    rank_card = ctx.cur_rank
+    last_action = ctx.last_action
     action_list = []
     if last_type != -1:
         action_list.append([])
@@ -287,6 +291,10 @@ def card_dict2list(card_info: dict):
         res.extend([k] * v)
     res.sort()
     return res
+
+def card_list2vector(card_info: list):
+
+    return []
 
 def card_dict2str(card_info: dict):
     return ''

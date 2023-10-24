@@ -2,7 +2,7 @@ import random
 
 from utils import *
 
-color = ['S', 'H', 'C', 'D'] # 黑桃 ♠ spade, 红心 ♥ heart, 方片 ♦ dianmond, 梅花 ♣ club
+color = ['S', 'H', 'C', 'D'] # 黑桃 ♠ Spade, 红心 ♥ Heart, 方片 ♦ Dianmond, 梅花 ♣ Club
 
 class CardDeck:
 

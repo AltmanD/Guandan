@@ -1,3 +1,9 @@
+from enum import Enum
+
+class ActionType(Enum):
+    Passive = 0
+    Leading = 1
+
 class Context:
     def __init__(self) -> None:
         self.table = None
@@ -8,7 +14,9 @@ class Context:
         self.steps = None
         self.player_waiting = None
         self.last_action = None
-        self.rank = None
+        self.last_max_action = None
+        self.action_type = None
+        self.cur_rank = None
         self.win_order_last_round = None
 
     def __repr__(self) -> str:
